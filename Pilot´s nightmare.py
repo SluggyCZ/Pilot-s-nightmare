@@ -3,12 +3,20 @@ import pygame
 pygame.init()
 
 
-ROZLISENI_X = 800
-ROZLISENI_Y = 600
+ROZLISENI_X = 1920
+ROZLISENI_Y = 1020
+
+
 FPS = 60
-
+velikostx = 150
+velikosty = 100
+pozicex = (ROZLISENI_X - velikostx) / 2
+pozicey = (ROZLISENI_Y - velikosty) / 2
 nebe = (0, 220, 255)
-
+letadlo = pygame.image.load('letadlo.png')
+letadlo = pygame.transform.scale(letadlo, (velikostx, velikosty))
+pozadi = pygame.image.load('pozadi.png')
+pozadi = pygame.transform.scale(pozadi, (ROZLISENI_X, ROZLISENI_Y))
 
 hodiny = pygame.time.Clock()
 okno = pygame.display.set_mode((ROZLISENI_X, ROZLISENI_Y))
@@ -23,9 +31,9 @@ while True:
     
     
     
+    okno.blit(pozadi, (0, 0))
+    okno.blit(letadlo, (pozicex, pozicey))
     
-    
-    okno.fill(nebe)
     
     pygame.display.update()
     hodiny.tick(FPS)
