@@ -1,5 +1,6 @@
 import sys
 import pygame
+import math
 pygame.init()
 
 
@@ -13,7 +14,7 @@ velikost_y = 100
 pozice_x = (ROZLISENI_X - velikost_x) / 2
 pozice_y = (ROZLISENI_Y - velikost_y) / 2
 rychlost = 3
-smer_x = -3
+smer_x = 0
 smer_y = 0
 nebe = (0, 220, 255)
 
@@ -34,23 +35,32 @@ while True:
     
     klavesy = pygame.key.get_pressed()
     
+    
     if klavesy[pygame.K_UP]:
-        if smer_x > 0:
-            smer_y += 0.25
-        elif smer_x < 0:
-            smer_y -= 0.25
+        smer_y -= 0.25
         
+        
+
+    
+    
+    
     if klavesy[pygame.K_DOWN]:
-        if smer_x > 0:
-            smer_y -= 0.25
-        elif smer_x < 0:
-            smer_y += 0.25
+        smer_y += 0.25
+        
+    
+    if klavesy[pygame.K_LEFT]:
+        smer_x -= 0.25
+        
+    if klavesy[pygame.K_RIGHT]:
+        smer_x += 0.25
+        
+    
+    
+    
     
     
     pozice_x += smer_x
     pozice_y += smer_y
-    
-   
     
     if smer_x < -3:
         smer_x = -3
