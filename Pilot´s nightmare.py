@@ -1,6 +1,7 @@
 import sys
 import pygame
 import math
+import random
 pygame.init()
 
 
@@ -16,12 +17,17 @@ pozice_y = (ROZLISENI_Y - velikost_y) / 2
 rychlost = 3
 smer_x = 0
 smer_y = 0
+mr1_x = 50
+mr1_y = 50
 nebe = (0, 220, 255)
 
-letadlo = pygame.image.load('letadlo.png')
+
+letadlo = pygame.image.load('vrtadlo.png')
 letadlo = pygame.transform.scale(letadlo, (velikost_x, velikost_y))
 pozadi = pygame.image.load('pozadi.png')
 pozadi = pygame.transform.scale(pozadi, (ROZLISENI_X, ROZLISENI_Y))
+mrak = pygame.image.load("mrak.png")
+mrak = pygame.transform.scale(mrak, (random.randint(50,150), random.randint(50,70)))
 
 hodiny = pygame.time.Clock()
 okno = pygame.display.set_mode((ROZLISENI_X, ROZLISENI_Y))
@@ -38,10 +44,6 @@ while True:
     
     if klavesy[pygame.K_UP]:
         smer_y -= 0.25
-        
-        
-
-    
     
     
     if klavesy[pygame.K_DOWN]:
@@ -50,6 +52,7 @@ while True:
     
     if klavesy[pygame.K_LEFT]:
         smer_x -= 0.25
+        
         
     if klavesy[pygame.K_RIGHT]:
         smer_x += 0.25
@@ -61,7 +64,7 @@ while True:
     
     pozice_x += smer_x
     pozice_y += smer_y
-    
+    mr1_x += 5
     if smer_x < -3:
         smer_x = -3
     if smer_x > 3:
@@ -83,7 +86,7 @@ while True:
     
     okno.blit(pozadi, (0, 0))
     okno.blit(letadlo, (pozice_x, pozice_y))
-    
+    okno.blit(mrak, (mr1_x,mr1_y))
     
     pygame.display.update()
     hodiny.tick(FPS)
