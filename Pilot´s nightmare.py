@@ -1,13 +1,13 @@
+#základy
 import sys
 import pygame
 import random
 
 pygame.init()
 
-
+#proměnné
 ROZLISENI_X = 1920
 ROZLISENI_Y = 1020
-
 
 FPS = 60
 velikost_x = 180
@@ -21,9 +21,19 @@ mr1_x = 50
 mr1_y = 50
 nebe = (0, 220, 255)
 uhel = 0
+poradi = 0
 
-letadlo = pygame.image.load('vrtadlo1.png')
-letadlo = pygame.transform.scale(letadlo, (velikost_x, velikost_y))
+#načtení obrázků
+letadlo1 = pygame.image.load('vrtadlo1.png')
+letadlo1 = pygame.transform.scale(letadlo1, (velikost_x, velikost_y))
+letadlo2 = pygame.image.load('vrtadlo2.png')
+letadlo2 = pygame.transform.scale(letadlo2, (velikost_x, velikost_y))
+
+animace = [letadlo1,
+           letadlo2]
+
+
+
 pozadi = pygame.image.load('pozadi.png')
 pozadi = pygame.transform.scale(pozadi, (ROZLISENI_X, ROZLISENI_Y))
 
@@ -38,7 +48,7 @@ while True:
         if udalost.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    
+    #ovládání
     klavesy = pygame.key.get_pressed()
     
     
@@ -61,9 +71,10 @@ while True:
     
     
     
-    
+    #kontroly
     pozice_x += smer_x
     pozice_y += smer_y
+    
     if smer_x < -3:
         smer_x = -3
     if smer_x > 3:
@@ -78,8 +89,6 @@ while True:
     if uhel < -15:
         uhel = -15
     
-    
-    
     if pozice_x > ROZLISENI_X - velikost_x:
         pozice_x = ROZLISENI_X - velikost_x
     if pozice_y > ROZLISENI_Y - velikost_y:
@@ -88,9 +97,18 @@ while True:
         pozice_x = 0
     if pozice_y < 0:
         pozice_y = 0
-    letadlo1 = pygame.transform.rotate(letadlo, uhel)
+    
+    #animace obrázku
+    if poradi >= len(animace):
+        poradi = 0
+    vyberletadla = animace[poradi]
+    letadlo = pygame.transform.rotate(vyberletadla, uhel)
+    
+    #vykreslení obrazu
     okno.fill(nebe)
-    okno.blit(letadlo1, (pozice_x, pozice_y))
+    okno.blit(letadlo, (pozice_x, pozice_y))
+    
+    poradi += 1
     
     pygame.display.update()
     hodiny.tick(FPS)
