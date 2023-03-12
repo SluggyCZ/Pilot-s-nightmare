@@ -30,6 +30,8 @@ letadlo2 = pygame.image.load('vrtadlo2.png')
 letadlo2 = pygame.transform.scale(letadlo2, (velikost_x, velikost_y))
 
 animace = [letadlo1,
+           letadlo1,
+           letadlo2,
            letadlo2]
 
 
