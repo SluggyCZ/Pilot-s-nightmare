@@ -20,9 +20,12 @@ smer_y = 0
 mr1_x = 50
 mr1_y = 50
 nebe = (0, 220, 255)
+cerna = (0, 0, 0)
 uhel = 0
 poradi = 0
-
+font = pygame.font.SysFont('Consolas', 30)
+counter, text = 0, '0'.rjust(3)
+pygame.time.set_timer(pygame.USEREVENT, 1000)
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
 letadlo1 = pygame.transform.scale(letadlo1, (velikost_x, velikost_y))
@@ -50,6 +53,9 @@ while True:
         if udalost.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if udalost.type == pygame.USEREVENT: 
+            counter += 1
+            text = str(counter).rjust(3) 
     #ovládání
     klavesy = pygame.key.get_pressed()
     
@@ -105,12 +111,10 @@ while True:
         poradi = 0
     vyberletadla = animace[poradi]
     letadlo = pygame.transform.rotate(vyberletadla, uhel)
-    
     #vykreslení obrazu
     okno.fill(nebe)
     okno.blit(letadlo, (pozice_x, pozice_y))
-    
+    okno.blit(font.render(text, True, (0, 0, 0)), (32, 48))
     poradi += 1
-    
     pygame.display.update()
     hodiny.tick(FPS)
