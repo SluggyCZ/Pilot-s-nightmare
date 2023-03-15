@@ -118,9 +118,10 @@ while True:
     letadlo = pygame.transform.rotate(vyberletadla, uhel)
     #vykreslení obrazu
     okno.fill(nebe)
+    okno.blit(bomba, (bomba_x, bomba_y))
     okno.blit(letadlo, (pozice_x, pozice_y))
     okno.blit(font.render(text, True, (0, 0, 0)), (32, 48))
-    okno.blit(bomba, (bomba_x, bomba_y))
+    
 
             
     poradi += 1
