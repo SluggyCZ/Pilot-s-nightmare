@@ -26,6 +26,11 @@ poradi = 0
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
+bomba_x = 500
+bomba_y = 500
+bomba_v_x = 40
+bomba_v_y = 70
+
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
 letadlo1 = pygame.transform.scale(letadlo1, (velikost_x, velikost_y))
@@ -33,7 +38,8 @@ letadlo2 = pygame.image.load('vrtadlo2.png')
 letadlo2 = pygame.transform.scale(letadlo2, (velikost_x, velikost_y))
 konec = pygame.image.load('konec.png')
 konec = pygame.transform.scale(konec, (ROZLISENI_X, ROZLISENI_Y))
-
+bomba = pygame.image.load('bomba.png')
+bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
 
 animace = [letadlo1,
            letadlo1,
@@ -114,11 +120,9 @@ while True:
     okno.fill(nebe)
     okno.blit(letadlo, (pozice_x, pozice_y))
     okno.blit(font.render(text, True, (0, 0, 0)), (32, 48))
-    if counter > 5:
-        okno.blit(konec, (0, 0))
-        
-    
-    
+    okno.blit(bomba, (bomba_x, bomba_y))
+
+            
     poradi += 1
     pygame.display.update()
     hodiny.tick(FPS)
