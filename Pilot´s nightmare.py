@@ -6,8 +6,8 @@ import random
 pygame.init()
 
 #proměnné
-ROZLISENI_X = 1920
-ROZLISENI_Y = 1020
+ROZLISENI_X = 1600
+ROZLISENI_Y = 900
 
 FPS = 60
 velikost_x = 180
@@ -23,11 +23,12 @@ nebe = (0, 220, 255)
 cerna = (0, 0, 0)
 uhel = 0
 poradi = 0
+pad = 15
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
-bomba_x = 500
-bomba_y = 500
+bomba_x = random.randint(0, ROZLISENI_X)
+bomba_y = 8000
 bomba_v_x = 40
 bomba_v_y = 70
 
@@ -88,14 +89,14 @@ while True:
     pozice_x += smer_x
     pozice_y += smer_y
     
-    if smer_x < -3:
-        smer_x = -3
-    if smer_x > 3:
-        smer_x = 3
-    if smer_y < -3:
-        smer_y = -3
-    if smer_y > 3:
-        smer_y = 3
+    if smer_x < -5:
+        smer_x = -5
+    if smer_x > 5:
+        smer_x = 5
+    if smer_y < -5:
+        smer_y = -5
+    if smer_y > 5:
+        smer_y = 5
     
     if uhel > 15:
         uhel = 15
@@ -118,12 +119,24 @@ while True:
     letadlo = pygame.transform.rotate(vyberletadla, uhel)
     #vykreslení obrazu
     okno.fill(nebe)
-    okno.blit(bomba, (bomba_x, bomba_y))
-    okno.blit(letadlo, (pozice_x, pozice_y))
-    okno.blit(font.render(text, True, (0, 0, 0)), (32, 48))
     
-
-            
+    if bomba_y > ROZLISENI_Y:    
+        bomba_y = 0
+        bomba_x = random.randint(50, ROZLISENI_X - 50)
+    okno.blit(bomba, (bomba_x, bomba_y))
+    
+    okno.blit(letadlo, (pozice_x, pozice_y))
+    okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
+    
+    if counter == 10:
+        pad += 5
+    if counter == 20:
+        pad += 0.1
+    if counter == 30:
+        pad += 0.1
+    if counter == 40:
+        pad += 0.1
+    bomba_y += pad   
     poradi += 1
     pygame.display.update()
     hodiny.tick(FPS)
