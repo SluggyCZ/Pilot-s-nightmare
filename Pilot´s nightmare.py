@@ -41,7 +41,8 @@ konec = pygame.image.load('konec.png')
 konec = pygame.transform.scale(konec, (ROZLISENI_X, ROZLISENI_Y))
 bomba = pygame.image.load('bomba.png')
 bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
-
+srdce = pygame.image.load("srdce.png")
+srdce = pygame.transform.scale(srdce, (30, 30))
 animace = [letadlo1,
            letadlo1,
            letadlo2,
@@ -132,6 +133,9 @@ while True:
     
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
+    kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
+    if kolize:
+        okno.blit(konec, (0, 0))
     if counter == 10:
         pad += 0.1
     if counter == 20:
@@ -140,7 +144,7 @@ while True:
         pad += 0.1
     if counter == 40:
         pad += 0.1
-    bomba_y += pad   
+    bomba_y += pad
     poradi += 1
     pygame.display.update()
     hodiny.tick(FPS)
