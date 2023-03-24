@@ -23,7 +23,7 @@ nebe = (0, 220, 255)
 cerna = (0, 0, 0)
 uhel = 0
 poradi = 0
-pad = 15
+pad = 12
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
@@ -89,14 +89,14 @@ while True:
     pozice_x += smer_x
     pozice_y += smer_y
     
-    if smer_x < -5:
-        smer_x = -5
-    if smer_x > 5:
-        smer_x = 5
-    if smer_y < -5:
-        smer_y = -5
-    if smer_y > 5:
-        smer_y = 5
+    if smer_x < -7:
+        smer_x = -7
+    if smer_x > 7:
+        smer_x = 7
+    if smer_y < -7:
+        smer_y = -7
+    if smer_y > 7:
+        smer_y = 7
     
     if uhel > 15:
         uhel = 15
@@ -117,19 +117,23 @@ while True:
         poradi = 0
     vyberletadla = animace[poradi]
     letadlo = pygame.transform.rotate(vyberletadla, uhel)
+    
     #vykreslení obrazu
     okno.fill(nebe)
     
     if bomba_y > ROZLISENI_Y:    
         bomba_y = 0
         bomba_x = random.randint(50, ROZLISENI_X - 50)
-    okno.blit(bomba, (bomba_x, bomba_y))
+    hitbox_b = pygame.draw.rect(okno, cerna, (bomba_x, bomba_y , bomba_v_x , bomba_v_y))
+    okno.blit(bomba, (bomba_x, bomba_y))    
     
+    hitbox_l = pygame.draw.rect(okno, cerna, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
     okno.blit(letadlo, (pozice_x, pozice_y))
+    
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
     if counter == 10:
-        pad += 5
+        pad += 0.1
     if counter == 20:
         pad += 0.1
     if counter == 30:
