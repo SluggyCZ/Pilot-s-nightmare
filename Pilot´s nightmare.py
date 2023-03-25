@@ -24,10 +24,11 @@ cerna = (0, 0, 0)
 uhel = 0
 poradi = 0
 pad = 12
+zivot = 5
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
-bomba_x = random.randint(0, ROZLISENI_X)
+bomba_x = random.randint(50, ROZLISENI_X - 50)
 bomba_y = 8000
 bomba_v_x = 40
 bomba_v_y = 70
@@ -125,16 +126,20 @@ while True:
     if bomba_y > ROZLISENI_Y:    
         bomba_y = 0
         bomba_x = random.randint(50, ROZLISENI_X - 50)
-    hitbox_b = pygame.draw.rect(okno, cerna, (bomba_x, bomba_y , bomba_v_x , bomba_v_y))
+    hitbox_b = pygame.draw.rect(okno, nebe, (bomba_x, bomba_y , bomba_v_x , bomba_v_y))
     okno.blit(bomba, (bomba_x, bomba_y))    
     
-    hitbox_l = pygame.draw.rect(okno, cerna, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
+    hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
     okno.blit(letadlo, (pozice_x, pozice_y))
     
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
     kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
     if kolize:
+        zivot -= 1
+        bomba_y = -750
+        bomba_x = random.randint(50, ROZLISENI_X - 50)
+    if zivot < 0:
         okno.blit(konec, (0, 0))
     if counter == 10:
         pad += 0.1
