@@ -42,8 +42,11 @@ konec = pygame.image.load('konec.png')
 konec = pygame.transform.scale(konec, (ROZLISENI_X, ROZLISENI_Y))
 bomba = pygame.image.load('bomba.png')
 bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
-srdce = pygame.image.load("srdce.png")
-srdce = pygame.transform.scale(srdce, (30, 30))
+z5 = pygame.image.load("5zivotu.png")
+z4 = pygame.image.load("4zivoty.png")
+z3 = pygame.image.load("3zivoty.png")
+z2 = pygame.image.load("2zivoty.png")
+z1 = pygame.image.load("1zivot.png")
 animace = [letadlo1,
            letadlo1,
            letadlo2,
@@ -130,7 +133,7 @@ while True:
     okno.blit(bomba, (bomba_x, bomba_y))    
     
     hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
-    okno.blit(letadlo, (pozice_x, pozice_y))
+    
     
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
@@ -139,7 +142,18 @@ while True:
         zivot -= 1
         bomba_y = -750
         bomba_x = random.randint(50, ROZLISENI_X - 50)
-    if zivot < 0:
+    if zivot == 5:
+        okno.blit(z5, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    if zivot == 4:
+        okno.blit(z4, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    if zivot == 3:
+        okno.blit(z3, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    if zivot == 2:
+        okno.blit(z2, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    if zivot == 1:
+        okno.blit(z1, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    okno.blit(letadlo, (pozice_x, pozice_y))
+    if zivot <= 0:
         okno.blit(konec, (0, 0))
     if counter == 10:
         pad += 0.1
