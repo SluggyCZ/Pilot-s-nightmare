@@ -176,6 +176,8 @@ while True:
     
     if zivot <= 0:
         okno.blit(konec, (0, 0))
+        heal_x = 50
+        padheal = 0
     if counter == 10:
         pad += 0.1
     if counter == 20:
