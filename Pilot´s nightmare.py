@@ -27,7 +27,7 @@ pad = 12
 heal_x = random.randint(50, ROZLISENI_X - 75)
 heal_y = -1000
 padheal = 6
-zivot = 5
+zivot = 1
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
@@ -72,7 +72,8 @@ while True:
             pygame.quit()
             sys.exit()
         if udalost.type == pygame.USEREVENT: 
-            counter += 1
+            if zivot > 0:
+                counter += 1
             text = str(counter).rjust(3) 
     #ovládání
     klavesy = pygame.key.get_pressed()
@@ -141,7 +142,7 @@ while True:
     okno.blit(bomba, (bomba_x, bomba_y))    
     
     hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
-    okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
+    
     
     hitbox_h = pygame.draw.rect(okno, nebe, (heal_x, heal_y, bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(heal, (heal_x, heal_y))
@@ -178,15 +179,20 @@ while True:
         okno.blit(konec, (0, 0))
         heal_x = 50
         padheal = 0
-    if counter == 10:
-        pad += 0.1
+    okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
+    
     if counter == 20:
-        pad += 0.1
-    if counter == 30:
         pad += 0.1
     if counter == 40:
         pad += 0.1
+    if counter == 60:
+        pad += 0.1
+    if counter == 80:
+        pad += 0.1
+    if counter == 100:
+        pad += 0.1
     bomba_y += pad
+    
     poradi += 1
     pygame.display.update()
     hodiny.tick(FPS)
