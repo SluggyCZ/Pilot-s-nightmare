@@ -24,6 +24,9 @@ cerna = (0, 0, 0)
 uhel = 0
 poradi = 0
 pad = 12
+heal_x = random.randint(50, ROZLISENI_X - 5)
+heal_y = 0
+padheal = 6
 zivot = 5
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
@@ -42,6 +45,8 @@ konec = pygame.image.load('konec.png')
 konec = pygame.transform.scale(konec, (ROZLISENI_X, ROZLISENI_Y))
 bomba = pygame.image.load('bomba.png')
 bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
+heal = pygame.image.load('padacek.png')
+heal = pygame.transform.scale(heal, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
 z5 = pygame.image.load("5zivotu.png")
 z4 = pygame.image.load("4zivoty.png")
 z3 = pygame.image.load("3zivoty.png")
@@ -133,11 +138,16 @@ while True:
     okno.blit(bomba, (bomba_x, bomba_y))    
     
     hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
-    
-    
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
+    okno.blit(heal, (heal_x, heal_y))
+    hitbox_h = pygame.draw.rect(okno, nebe, (heal_x, heal_y, bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
+    
+    
     kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
+    kolize_h = pygame.Rect.colliderect(hitbox_h, hitbox_l)
+    
+    
     if kolize:
         zivot -= 1
         bomba_y = -750
@@ -152,7 +162,11 @@ while True:
         okno.blit(z2, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot == 1:
         okno.blit(z1, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
+    
+    
     okno.blit(letadlo, (pozice_x, pozice_y))
+    
+    
     if zivot <= 0:
         okno.blit(konec, (0, 0))
     if counter == 10:
