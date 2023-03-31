@@ -35,6 +35,11 @@ bomba_x = random.randint(50, ROZLISENI_X - 50)
 bomba_y = 8000
 bomba_v_x = 40
 bomba_v_y = 70
+bomba2_x = pozice_x
+bomba2_y = pozice_y
+naboj_x = random.randint(50, ROZLISENI_X - 50)
+naboj_y = 10000
+padnaboj = 6
 
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
@@ -47,6 +52,11 @@ bomba = pygame.image.load('bomba.png')
 bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
 heal = pygame.image.load('padacek.png')
 heal = pygame.transform.scale(heal, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
+bomba2 = pygame.image.load('bomba2.png')
+bomba2 = pygame.transform.scale(bomba2, (bomba_v_x, bomba_v_y - 20))
+naboj = pygame.image.load('padacek2.png')
+naboj = pygame.transform.scale(naboj, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
+
 z5 = pygame.image.load("5zivotu.png")
 z4 = pygame.image.load("4zivoty.png")
 z3 = pygame.image.load("3zivoty.png")
@@ -146,10 +156,11 @@ while True:
     
     hitbox_h = pygame.draw.rect(okno, nebe, (heal_x, heal_y, bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(heal, (heal_x, heal_y))
-    
+    hitbox_n = pygame.draw.rect(okno, nebe, (naboj_x, naboj_y , bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
+    okno.blit(naboj, (naboj_x, naboj_y))
     kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
     kolize_h = pygame.Rect.colliderect(hitbox_h, hitbox_l)
-    
+    kolize_n = pygame.Rect.colliderect(hitbox_n, hitbox_l)
     
     if kolize:
         zivot -= 1
@@ -159,6 +170,9 @@ while True:
         zivot += 1
         heal_y = -1000
         heal_x = random.randint(50, ROZLISENI_X - 50)
+    if kolize_n:
+        naboj_y = 10000
+        naboj_x = random.randint(50, ROZLISENI_X - 50)
     if zivot == 5:
         okno.blit(z5, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot == 4:
@@ -181,8 +195,18 @@ while True:
         padheal = 0
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
+    if counter == 10:
+        naboj_y = -150
+        
     if counter == 20:
         pad += 0.1
+        naboj_y = -150
+        
+    
+    if counter == 30:
+        naboj_y = -150
+        
+    
     if counter == 40:
         pad += 0.1
     if counter == 60:
@@ -192,7 +216,7 @@ while True:
     if counter == 100:
         pad += 0.1
     bomba_y += pad
-    
+    naboj_y += padnaboj
     poradi += 1
     pygame.display.update()
     hodiny.tick(FPS)
