@@ -27,7 +27,7 @@ pad = 12
 heal_x = random.randint(50, ROZLISENI_X - 75)
 heal_y = -1000
 padheal = 6
-zivot = 1
+zivot = 5
 font = pygame.font.SysFont('Consolas', 30)
 counter, text = 0, '0'.rjust(3)
 pygame.time.set_timer(pygame.USEREVENT, 1000)
