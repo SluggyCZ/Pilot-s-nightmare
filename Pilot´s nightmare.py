@@ -40,7 +40,7 @@ bomba2_y = pozice_y
 naboj_x = random.randint(50, ROZLISENI_X - 50)
 naboj_y = 10000
 padnaboj = 6
-
+zasobnik = 0
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
 letadlo1 = pygame.transform.scale(letadlo1, (velikost_x, velikost_y))
@@ -54,6 +54,8 @@ heal = pygame.image.load('padacek.png')
 heal = pygame.transform.scale(heal, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
 bomba2 = pygame.image.load('bomba2.png')
 bomba2 = pygame.transform.scale(bomba2, (bomba_v_x, bomba_v_y - 20))
+bomba2obr = pygame.image.load('bomba2obr.png')
+bomba2obr = pygame.transform.scale(bomba2obr, (bomba_v_x / 2, (bomba_v_y - 20) / 2))
 naboj = pygame.image.load('padacek2.png')
 naboj = pygame.transform.scale(naboj, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
 
@@ -171,8 +173,10 @@ while True:
         heal_y = -1000
         heal_x = random.randint(50, ROZLISENI_X - 50)
     if kolize_n:
+        zasobnik + 1
         naboj_y = 10000
         naboj_x = random.randint(50, ROZLISENI_X - 50)
+    
     if zivot == 5:
         okno.blit(z5, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot == 4:
@@ -185,7 +189,11 @@ while True:
         okno.blit(z1, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot < 5:
         heal_y += padheal
-    
+#    if naboj == 1:
+        
+#    if naboj == 2:
+        
+#    if naboj == 3:
     okno.blit(letadlo, (pozice_x, pozice_y))
     
     
@@ -199,7 +207,7 @@ while True:
         naboj_y = -150
         
     if counter == 20:
-        pad += 0.1
+        pad += 110.1
         naboj_y = -150
         
     
