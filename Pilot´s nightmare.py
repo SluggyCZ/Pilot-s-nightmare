@@ -49,7 +49,7 @@ boss_x = ROZLISENI_X
 boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
 bomba2_x = 10000
 bomba2_y = 10000
-
+zivot_b = 3
 
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
@@ -168,23 +168,26 @@ while True:
         heal_x = random.randint(50, ROZLISENI_X - 50)
     if bomba2_y > ROZLISENI_Y:
         bomba2_x = 10000
+    hitbox_v = pygame.draw.rect(okno, nebe, (boss_x, boss_y , boss_v_x , boss_v_y + 10))
     hitbox_b = pygame.draw.rect(okno, nebe, (bomba_x, bomba_y , bomba_v_x , bomba_v_y))
     okno.blit(bomba, (bomba_x, bomba_y))    
     hitbox_b2 = pygame.draw.rect(okno, nebe, (bomba2_x, bomba2_y , bomba2_v_x , bomba2_v_y))
     okno.blit(bomba2, (bomba2_x, bomba2_y))
     hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
-    hitbox_v = pygame.draw.rect(okno, nebe, (boss_x, boss_y , boss_v_x , boss_v_y + 10))
+    
     
     hitbox_h = pygame.draw.rect(okno, nebe, (heal_x, heal_y, bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(heal, (heal_x, heal_y))
     
     hitbox_n = pygame.draw.rect(okno, nebe, (naboj_x, naboj_y , bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(naboj, (naboj_x, naboj_y))
+    hitbox_p = pygame.draw.rect(okno, nebe, (0, 0 , 1 , ROZLISENI_Y))
     
     kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
     kolize_h = pygame.Rect.colliderect(hitbox_h, hitbox_l)
     kolize_n = pygame.Rect.colliderect(hitbox_n, hitbox_l)
-    
+    kolize_b = pygame.Rect.colliderect(hitbox_b2, hitbox_v)
+    kolize_p = pygame.Rect.colliderect(hitbox_v, hitbox_p)
     if kolize:
         zivot -= 1
         bomba_y = -750
@@ -197,6 +200,14 @@ while True:
         zasobnik += 1
         naboj_y = 10000
         naboj_x = random.randint(50, ROZLISENI_X - 50)
+    if kolize_b:
+        zivot_b -= 1
+        bomba2_x = 10000
+    if kolize_p:
+        zivot -= 1
+    if zivot_b <= 0:
+        boss_y += 4
+    
     
     if bomba2_x == 10000:
         if klavesy[pygame.K_SPACE]:
@@ -204,6 +215,7 @@ while True:
                 bomba2_x = pozice_x + (velikost_x / 2)
                 bomba2_y = pozice_y + velikost_y
                 zasobnik -= 1
+    
     if zivot == 5:
         okno.blit(z5, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot == 4:
@@ -236,7 +248,6 @@ while True:
         naboj_y = -150
         
     if counter == 20:
-        pad += 0.1
         naboj_y = -150
         
     
@@ -245,25 +256,23 @@ while True:
         
     
     if counter >= 40 and counter <= 42:
-        pad += 0.1
         okno.blit(napis, (0, 0))
     if counter >= 42:
         okno.blit(boss, (boss_x , boss_y))
         boss_x += -3
     if counter == 60:
-        pad += 0.1
         naboj_y = -150
     if counter == 70:
         naboj_y = -150
     if counter == 80:
-        pad += 0.1
         naboj_y = -150
     if counter >= 90 and counter <= 92:
         okno.blit(napis, (0, 0))
     if counter == 92:
-        boss_x = 0
-    if counter == 100:
-        pad += 0.1
+        zivot_b = 3
+        boss_x = ROZLISENI_X
+        boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
+
     
     
     
