@@ -188,6 +188,7 @@ while True:
     kolize_n = pygame.Rect.colliderect(hitbox_n, hitbox_l)
     kolize_b = pygame.Rect.colliderect(hitbox_b2, hitbox_v)
     kolize_p = pygame.Rect.colliderect(hitbox_v, hitbox_p)
+    kolize_g =  pygame.Rect.colliderect(hitbox_v, hitbox_l)
     if kolize:
         zivot -= 1
         bomba_y = -750
@@ -205,6 +206,10 @@ while True:
         bomba2_x = 10000
     if kolize_p:
         zivot -= 1
+    if kolize_g:
+        zivot -= 1
+    
+    
     if zivot_b <= 0:
         boss_y += 4
     
@@ -245,16 +250,11 @@ while True:
     okno.blit(font.render(text, True, (0, 0, 0)), (ROZLISENI_X - ROZLISENI_X/1.05, ROZLISENI_Y - ROZLISENI_Y/1.05))
     
     if counter == 10:
-        naboj_y = -150
-        
+        naboj_y = -150        
     if counter == 20:
         naboj_y = -150
-        
-    
     if counter == 30:
         naboj_y = -150
-        
-    
     if counter >= 40 and counter <= 42:
         okno.blit(napis, (0, 0))
     if counter >= 42:
@@ -262,6 +262,7 @@ while True:
         boss_x += -3
     if counter == 60:
         naboj_y = -150
+        pad += 0.05
     if counter == 70:
         naboj_y = -150
     if counter == 80:
@@ -272,7 +273,58 @@ while True:
         zivot_b = 3
         boss_x = ROZLISENI_X
         boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
-
+    if counter == 110:
+        naboj_y = -150
+        pad += 0.05
+    if counter == 120:
+        naboj_y = -150
+    if counter == 130:
+        naboj_y = -150
+    if counter >= 140 and counter <= 142:
+        okno.blit(napis, (0, 0))
+    if counter == 142:
+        zivot_b = 3
+        boss_x = ROZLISENI_X
+        boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
+    if counter == 160:
+        naboj_y = -150
+        pad += 0.05
+    if counter == 170:
+        naboj_y = -150
+    if counter == 180:
+        naboj_y = -150
+    if counter >= 190 and counter <= 192:
+        okno.blit(napis, (0, 0))
+    if counter == 192:
+        zivot_b = 3
+        boss_x = ROZLISENI_X
+        boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
+    if counter == 210:
+        naboj_y = -150
+        pad += 0.05
+    if counter == 220:
+        naboj_y = -150
+    if counter == 230:
+        naboj_y = -150
+    if counter >= 240 and counter <= 242:
+        okno.blit(napis, (0, 0))
+    if counter == 242:
+        zivot_b = 3
+        boss_x = ROZLISENI_X
+        boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
+    if counter == 260:
+        naboj_y = -150
+        pad += 0.05
+    if counter == 270:
+        naboj_y = -150
+    if counter == 280:
+        naboj_y = -150
+    if counter >= 290 and counter <= 292:
+        okno.blit(napis, (0, 0))
+    if counter == 292:
+        zivot_b = 3
+        boss_x = ROZLISENI_X
+        boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
     
     
     
