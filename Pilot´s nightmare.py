@@ -37,10 +37,20 @@ bomba_v_x = 40
 bomba_v_y = 70
 bomba2_x = pozice_x
 bomba2_y = pozice_y
+bomba2_v_x = bomba_v_x
+bomba2_v_y = bomba_v_y - 20
 naboj_x = random.randint(50, ROZLISENI_X - 50)
 naboj_y = 10000
 padnaboj = 6
 zasobnik = 0
+boss_v_x = 600
+boss_v_y = 300
+boss_x = ROZLISENI_X
+boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
+bomba2_x = 10000
+bomba2_y = 10000
+
+
 #načtení obrázků
 letadlo1 = pygame.image.load('vrtadlo1.png')
 letadlo1 = pygame.transform.scale(letadlo1, (velikost_x, velikost_y))
@@ -53,11 +63,15 @@ bomba = pygame.transform.scale(bomba, (bomba_v_x, bomba_v_y))
 heal = pygame.image.load('padacek.png')
 heal = pygame.transform.scale(heal, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
 bomba2 = pygame.image.load('bomba2.png')
-bomba2 = pygame.transform.scale(bomba2, (bomba_v_x, bomba_v_y - 20))
+bomba2 = pygame.transform.scale(bomba2, (bomba2_v_x, bomba2_v_y ))
 bomba2obr = pygame.image.load('bomba2obr.png')
 bomba2obr = pygame.transform.scale(bomba2obr, (bomba_v_x / 2, (bomba_v_y - 20) / 2))
 naboj = pygame.image.load('padacek2.png')
 naboj = pygame.transform.scale(naboj, (bomba_v_x + (bomba_v_x / 2), bomba_v_y + (bomba_v_y / 2)))
+napis = pygame.image.load('napis.png')
+napis = pygame.transform.scale(napis, (ROZLISENI_X, ROZLISENI_Y))
+boss = pygame.image.load('boss.png')
+boss = pygame.transform.scale(boss, (boss_v_x, boss_v_y))
 
 z5 = pygame.image.load("5zivotu.png")
 z4 = pygame.image.load("4zivoty.png")
@@ -87,7 +101,9 @@ while True:
             if zivot > 0:
                 counter += 1
             text = str(counter).rjust(3) 
-    #ovládání
+    
+    
+   #ovládání
     klavesy = pygame.key.get_pressed()
     
     
@@ -146,20 +162,25 @@ while True:
     
     if bomba_y > ROZLISENI_Y:    
         bomba_y = 0
-        bomba_x = random.randint(50, ROZLISENI_X - 50)
+        bomba_x = random.randint(50, ROZLISENI_X - 50)    
     if heal_y >ROZLISENI_Y:
         heal_y = -1000
         heal_x = random.randint(50, ROZLISENI_X - 50)
+    if bomba2_y > ROZLISENI_Y:
+        bomba2_x = 10000
     hitbox_b = pygame.draw.rect(okno, nebe, (bomba_x, bomba_y , bomba_v_x , bomba_v_y))
     okno.blit(bomba, (bomba_x, bomba_y))    
-    
+    hitbox_b2 = pygame.draw.rect(okno, nebe, (bomba2_x, bomba2_y , bomba2_v_x , bomba2_v_y))
+    okno.blit(bomba2, (bomba2_x, bomba2_y))
     hitbox_l = pygame.draw.rect(okno, nebe, (pozice_x + 10, pozice_y + 10, velikost_x - 10, velikost_y))
-    
+    hitbox_v = pygame.draw.rect(okno, nebe, (boss_x, boss_y , boss_v_x , boss_v_y + 10))
     
     hitbox_h = pygame.draw.rect(okno, nebe, (heal_x, heal_y, bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(heal, (heal_x, heal_y))
+    
     hitbox_n = pygame.draw.rect(okno, nebe, (naboj_x, naboj_y , bomba_v_x + (bomba_v_x / 2) , bomba_v_y + (bomba_v_y / 2)))
     okno.blit(naboj, (naboj_x, naboj_y))
+    
     kolize = pygame.Rect.colliderect(hitbox_b, hitbox_l)
     kolize_h = pygame.Rect.colliderect(hitbox_h, hitbox_l)
     kolize_n = pygame.Rect.colliderect(hitbox_n, hitbox_l)
@@ -173,10 +194,16 @@ while True:
         heal_y = -1000
         heal_x = random.randint(50, ROZLISENI_X - 50)
     if kolize_n:
-        zasobnik + 1
+        zasobnik += 1
         naboj_y = 10000
         naboj_x = random.randint(50, ROZLISENI_X - 50)
     
+    if bomba2_x == 10000:
+        if klavesy[pygame.K_SPACE]:
+            if zasobnik >= 1:
+                bomba2_x = pozice_x + (velikost_x / 2)
+                bomba2_y = pozice_y + velikost_y
+                zasobnik -= 1
     if zivot == 5:
         okno.blit(z5, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot == 4:
@@ -189,11 +216,13 @@ while True:
         okno.blit(z1, ((ROZLISENI_X/2)-127.5, ROZLISENI_Y-30))
     if zivot < 5:
         heal_y += padheal
-#    if naboj == 1:
-        
-#    if naboj == 2:
-        
-#    if naboj == 3:
+    if zasobnik >= 1:
+        okno.blit(bomba2obr, ((ROZLISENI_X/2) + 50, ROZLISENI_Y-30))
+    if zasobnik >= 2:
+        okno.blit(bomba2obr, ((ROZLISENI_X/2) + 100, ROZLISENI_Y-30))
+    if zasobnik >= 3:
+        okno.blit(bomba2obr, ((ROZLISENI_X/2) + 150, ROZLISENI_Y-30))
+    
     okno.blit(letadlo, (pozice_x, pozice_y))
     
     
@@ -207,7 +236,7 @@ while True:
         naboj_y = -150
         
     if counter == 20:
-        pad += 110.1
+        pad += 0.1
         naboj_y = -150
         
     
@@ -215,15 +244,32 @@ while True:
         naboj_y = -150
         
     
-    if counter == 40:
+    if counter >= 40 and counter <= 42:
         pad += 0.1
+        okno.blit(napis, (0, 0))
+    if counter >= 42:
+        okno.blit(boss, (boss_x , boss_y))
+        boss_x += -3
     if counter == 60:
         pad += 0.1
+        naboj_y = -150
+    if counter == 70:
+        naboj_y = -150
     if counter == 80:
         pad += 0.1
+        naboj_y = -150
+    if counter >= 90 and counter <= 92:
+        okno.blit(napis, (0, 0))
+    if counter == 92:
+        boss_x = 0
     if counter == 100:
         pad += 0.1
+    
+    
+    
+    
     bomba_y += pad
+    bomba2_y += 15
     naboj_y += padnaboj
     poradi += 1
     pygame.display.update()
