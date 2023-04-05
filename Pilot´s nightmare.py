@@ -325,7 +325,8 @@ while True:
         zivot_b = 3
         boss_x = ROZLISENI_X
         boss_y = (ROZLISENI_Y / 2) - boss_v_y / 2
-    
+    if counter == 3:
+        pad += 10
     
     
     
